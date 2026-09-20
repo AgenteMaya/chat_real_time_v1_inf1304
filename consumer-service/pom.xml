@@ -14,7 +14,6 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <build>
         <finalName>consumer-service</finalName>
-        <sourceDirectory>src</sourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

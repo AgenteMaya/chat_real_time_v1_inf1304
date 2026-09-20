@@ -19,6 +19,8 @@ import java.util.Collections;
 import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -89,11 +91,10 @@ public class ChatConsumer {
                             sensorValue,
                             timestamp
                         );
-
-                    } catch (NumberFormatException exception) {
-                        logger.error("Valor inválido recebido: {}", record.value());
+                    } catch (JsonProcessingException exception) {
+                        logger.error("JSON inválido recebido: {}", record.value());
                     }
-                }   
+                }
             }
         } finally {
             consumer.close();
