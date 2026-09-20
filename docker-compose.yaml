@@ -104,8 +104,7 @@ services:
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka-1:9092,kafka-2:9092,kafka-3:9092
 
-
-  consumer-service:
+  consumer-temperatura:
     build: ./consumer-service
 
     ports:
@@ -122,13 +121,59 @@ services:
 
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka-1:9092,kafka-2:9092,kafka-3:9092
+      KAFKA_TOPIC: temperatura
+      KAFKA_GROUP_ID: temperatura-consumer
+      SENSOR_MIN: "10"
+      SENSOR_MAX: "35"
 
+  consumer-vibracao:
+    build: ./consumer-service
+
+    ports:
+      - "8084:8080"
+
+    depends_on:
+      - kafka-1
+      - kafka-2
+      - kafka-3
+
+    networks:
+      - ext-network
+      - int-network
+
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka-1:9092,kafka-2:9092,kafka-3:9092
+      KAFKA_TOPIC: vibracao
+      KAFKA_GROUP_ID: vibracao-consumer
+      SENSOR_MIN: "10"
+      SENSOR_MAX: "35"
+
+  consumer-energia:
+    build: ./consumer-service
+
+    ports:
+      - "8085:8080"
+
+    depends_on:
+      - kafka-1
+      - kafka-2
+      - kafka-3
+
+    networks:
+      - ext-network
+      - int-network
+
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka-1:9092,kafka-2:9092,kafka-3:9092
+      KAFKA_TOPIC: energia
+      KAFKA_GROUP_ID: energia-consumer
+      SENSOR_MIN: "10"
+      SENSOR_MAX: "35"
 
 volumes:
   kafka-data-1:
   kafka-data-2:
   kafka-data-3:
-
 
 networks:
   ext-network:
